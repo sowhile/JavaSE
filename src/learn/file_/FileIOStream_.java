@@ -140,4 +140,9 @@ public class FileIOStream_ {
             }
         }
     }
+
+    @Test
+    public void buffCopy() throws IOException{
+
+    }
 }
