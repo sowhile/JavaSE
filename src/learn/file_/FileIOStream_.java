@@ -1,5 +1,6 @@
 package learn.file_;
 
+import jdk.nashorn.internal.ir.CallNode;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -142,7 +143,15 @@ public class FileIOStream_ {
     }
 
     @Test
-    public void buffCopy() throws IOException{
-
+    public void buffCopy() throws IOException {
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream("c:\\io\\software.zip"));
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream("c:\\io\\test.zip"));
+        int readLen = 0;
+        byte[] bytes = new byte[2048];
+        while ((readLen = bufferedInputStream.read(bytes)) != -1) {
+            bufferedOutputStream.write(bytes, 0, readLen);
+        }
+        bufferedInputStream.close();
+        bufferedOutputStream.close();
     }
 }
