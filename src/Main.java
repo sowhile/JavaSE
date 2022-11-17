@@ -2,10 +2,11 @@
  * @author WangDa
  * @version 1.0
  * <p>
- * ${DATE} ${TIME}
+ * 2022/11/16 23:12
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world");
+        System.out.println("hello");
+        System.out.println("world");
     }
 }
