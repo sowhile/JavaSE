@@ -51,6 +51,21 @@ public class exercise {
         Dog dog1 = (Dog) objectInputStream.readObject();
         System.out.println(dog1);
     }
+
+    /**
+     * crazy!
+     */
+    @Test
+    public void test() throws IOException {
+        File file = new File("c:\\io\\test.dat");
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+        char[] chars = new char[Integer.MAX_VALUE / 100];
+        for (char c : chars)
+            c = 'A';
+        for (int i = 0; i < 99999999; i++)
+            bufferedWriter.write(chars);
+        bufferedWriter.close();
+    }
 }
 
 class Dog implements Serializable {
