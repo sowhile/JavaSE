@@ -1,2 +1,2 @@
 # javabasic
-note and src
+*note and src*
