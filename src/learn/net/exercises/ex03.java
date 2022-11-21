@@ -30,6 +30,7 @@ public class ex03 {
         }
 
         File file = getFile(new File("c:\\io"), fileName);
+        //设置默认发送文件
         file = file == null ? new File("c:\\io\\test.zip") : file;
 
         //发送文件
