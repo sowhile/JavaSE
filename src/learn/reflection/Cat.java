@@ -8,17 +8,17 @@ package learn.reflection;
  */
 public class Cat {
     public String name;
-    private int age;
+    private static int age;
 
     public Cat() {
     }
 
-    public Cat(String name, int age) {
+    private Cat(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
-    public void mt() {
+    public static void mt() {
         System.out.println("a method");
     }
 
@@ -39,5 +39,20 @@ public class Cat {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Cat{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+}
+
+class Dog extends Cat {
+    public Dog() {
+    }
+
+    private Dog(int a) {
     }
 }

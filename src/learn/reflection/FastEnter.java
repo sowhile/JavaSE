@@ -3,6 +3,8 @@ package learn.reflection;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
@@ -32,14 +34,37 @@ public class FastEnter {
     }
 
     @Test
+    public void forceAccess() throws Exception {
+        Class<?> aClass = Class.forName("learn.reflection.Cat");
+        Constructor<?> declaredConstructor = aClass.getDeclaredConstructor(String.class, int.class);
+        declaredConstructor.setAccessible(true);
+        Object o = declaredConstructor.newInstance("cat", 18);
+        System.out.println(o);
+
+        Field age = aClass.getDeclaredField("age");
+        age.setAccessible(true);
+        age.set(null, 19);
+        System.out.println(age.get(null));
+    }
+
+    @Test
     public void t() throws Exception {
-        Class<?> aClass = Class.forName("java.lang.Integer");
-        Method[] methods = aClass.getMethods();
-        for (Method method : methods) {
-            System.out.println(method);
+        Class<?> aClass = Class.forName("learn.reflection.Dog");
+        Constructor<?>[] declaredConstructors = aClass.getDeclaredConstructors();
+        for (Constructor<?> declaredConstructor : declaredConstructors) {
+            System.out.println(declaredConstructor);
+            Class<?>[] parameterTypes = declaredConstructor.getParameterTypes();
+            for (Class<?> parameterType : parameterTypes) {
+                System.out.println(parameterType);
+            }
         }
     }
 
+    /**
+     * 得到一个类对应的额Class有4种方法
+     *
+     * @throws Exception
+     */
     @Test
     public void getClassTest() throws Exception {
         //1
@@ -71,6 +96,11 @@ public class FastEnter {
         System.out.println(type);
     }
 
+    /**
+     * 比较不使用反射和使用反射调用方法的时间
+     *
+     * @throws Exception
+     */
     @Test
     public void compareTime() throws Exception {
         m1();
