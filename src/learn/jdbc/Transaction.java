@@ -25,6 +25,7 @@ public class Transaction {
         try {
             connection = JDBCUtils.getConnection();
             preparedStatement = connection.prepareStatement(sql1);
+            //关闭自动提交
             connection.setAutoCommit(false);
             preparedStatement.executeUpdate();
 
@@ -32,6 +33,7 @@ public class Transaction {
 
             preparedStatement1 = connection.prepareStatement(sql2);
             preparedStatement1.executeUpdate();
+            //提交
             connection.commit();
         } catch (Exception e) {
             System.out.println("roll back.");
