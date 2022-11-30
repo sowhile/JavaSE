@@ -3,6 +3,7 @@ package learn.jdbc;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
@@ -15,11 +16,12 @@ import java.util.List;
  * 2022/11/30 15:00
  */
 public class DBUtils {
+    //查询多条记录，会封装到一个List中
     @Test
     public void testQueryMany() throws Exception {
         //通过Druid工具类得到连接
         Connection connection = JDBCDruidUtils.getConnection();
-        //
+
         QueryRunner queryRunner = new QueryRunner();
         String sql = "SELECT * FROM login";
 
@@ -38,15 +40,44 @@ public class DBUtils {
         JDBCDruidUtils.close(null, null, connection);
     }
 
+    //查询单行记录，会封装到Login对象中
     @Test
     public void testQuerySingle() throws Exception {
         //通过Druid工具类得到连接
         Connection connection = JDBCDruidUtils.getConnection();
-        //
+
         QueryRunner queryRunner = new QueryRunner();
         String sql = "SELECT * FROM login WHERE user = ?";
         Login wd = queryRunner.query(connection, sql, new BeanHandler<>(Login.class), "wd");
         System.out.println(wd);
+        JDBCDruidUtils.close(null, null, connection);
+    }
+
+    //查询单行单列的值，会封装到Object中
+    @Test
+    public void testQueryScalar() throws Exception {
+        //通过Druid工具类得到连接
+        Connection connection = JDBCDruidUtils.getConnection();
+
+        QueryRunner queryRunner = new QueryRunner();
+        String sql = "SELECT password FROM login WHERE user = ?";
+        Object wd = queryRunner.query(connection, sql, new ScalarHandler(), "wd");
+        System.out.println(wd);
+
+        JDBCDruidUtils.close(null, null, connection);
+    }
+
+    //Apache DBUtils 完成DML
+    @Test
+    public void testDML() throws Exception {
+        //通过Druid工具类得到连接
+        Connection connection = JDBCDruidUtils.getConnection();
+
+        QueryRunner queryRunner = new QueryRunner();
+        String sql = "INSERT INTO login VALUES(?, ?)";
+        int rows = queryRunner.update(connection, sql, "apache", "666");
+        System.out.println(rows != 0 ? "success" : "fail");
+
         JDBCDruidUtils.close(null, null, connection);
     }
 }
