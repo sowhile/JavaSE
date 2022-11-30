@@ -41,7 +41,7 @@ public class Batch {
             preparedStatement.setString(3, "666");
             //将SQL语句加入批处理包中
             preparedStatement.addBatch();
-
+            //每1000次执行一次
             if ((i + 1) % 1000 == 0) {
                 preparedStatement.executeBatch();
                 preparedStatement.clearBatch();
