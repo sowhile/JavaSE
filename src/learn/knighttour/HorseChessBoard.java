@@ -2,6 +2,7 @@ package learn.knighttour;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * @author sowhile
@@ -35,6 +36,16 @@ public class HorseChessBoard {
         }
     }
 
+    //写一个方法，对ps的各个位置，可以走的下一个位置的次数进行排序, 把可能走的下一个位置从小到大排序
+    public static void sort(ArrayList<Point> ps) {
+        ps.sort(new Comparator<Point>() {
+            @Override
+            public int compare(Point o1, Point o2) {
+                return next(o1).size() - next(o2).size();
+            }
+        });
+    }
+
     /**
      * 核心算法，遍历棋盘，遍历成功就把 finished 设为true
      * 并把马走的每一步记录到 chessBoard
@@ -51,6 +62,7 @@ public class HorseChessBoard {
         visited[row * X + col] = true;
         //获取当前位置可以走的下一个位置
         ArrayList<Point> ps = next(new Point(col, row));
+        sort(ps);
         //遍历
         while (!ps.isEmpty()) {
             //取出当前 ps 第一个位置

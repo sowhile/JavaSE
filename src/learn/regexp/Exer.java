@@ -50,4 +50,20 @@ public class Exer {
             System.out.println(matcher.group(4));
         }
     }
+
+    /**
+     * 验证身份证
+     */
+    @Test
+    public void ex04() {
+        String content = "610322200001010000";
+        String regStr = "^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{4}$";
+
+        Pattern compile = Pattern.compile(regStr);
+        Matcher matcher = compile.matcher(content);
+
+        while (matcher.find()) {
+            System.out.println(matcher.group(0));
+        }
+    }
 }
